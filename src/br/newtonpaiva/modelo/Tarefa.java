@@ -8,7 +8,6 @@ package br.newtonpaiva.modelo;
 //Ctrl + Shift + i
 
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  *
@@ -20,33 +19,44 @@ public class Tarefa {
     private String nome;
     private Integer prioridade;
     private Calendar dataLimite;
-    private Date data;
     private String situacao;
     private Integer percentual;
     private String descricao;
     
+    
+    public Tarefa(String nome, Integer prioridade) {
+        
+    }
+    
      /* Métodos */
-    void salvar() {
+    public void salvar() {
         // gravar no banco de dados
         System.out.println("Executou o salvar()");
     }
     
-    void excluir() {
+    public void excluir() {
         // excluir no banco de dados
         System.out.println("Executou o excluir");
     }
     
-    Tarefa[] listar() {
+    public Tarefa[] listar() {
         // Buscar do banco de dados as tarefas
         System.out.println("Executou o listar");
         
         return null;
     }
-    
+
+    /**
+     * @return the id
+     */
+    public Integer getId() {
+        return id;
+    }
+
     /**
      * @param id the id to set
      */
-    public void setId(Integer id)  {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -54,14 +64,7 @@ public class Tarefa {
      * @return the nome
      */
     public String getNome() {
-        return this.nome;
-    }
- 
-    /**
-     * @return the id
-     */
-    public Integer getId() {
-        return id;
+        return nome;
     }
 
     /**
@@ -97,20 +100,6 @@ public class Tarefa {
      */
     public void setDataLimite(Calendar dataLimite) {
         this.dataLimite = dataLimite;
-    }
-
-    /**
-     * @return the data
-     */
-    public Date getData() {
-        return data;
-    }
-
-    /**
-     * @param data the data to set
-     */
-    public void setData(Date data) {
-        this.data = data;
     }
 
     /**
@@ -154,4 +143,6 @@ public class Tarefa {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+    
+    
 }

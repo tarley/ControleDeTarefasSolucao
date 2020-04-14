@@ -220,8 +220,10 @@ public class TelaRegistroTarefa extends javax.swing.JDialog {
         System.out.println(nome + " - " + prioridade + " - " + data + " - " 
                 + percentual);
         
-        Tarefa t = new Tarefa();
+        Tarefa t = new Tarefa(nome, 5);
         t.setNome(nome);
+        t.setDescricao(descricao);
+        
    
         
         // Montar um objeto tarefa
