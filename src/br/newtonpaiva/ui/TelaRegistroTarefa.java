@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controledetarefas;
+package br.newtonpaiva.ui;
 
+import br.newtonpaiva.modelo.Tarefa;
 import javax.swing.JOptionPane;
 
 /**
@@ -139,7 +140,7 @@ public class TelaRegistroTarefa extends javax.swing.JDialog {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
         );
 
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/controledetarefas/ui/icones/cancel.png"))); // NOI18N
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/newtonpaiva/ui/icones/cancel.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,7 +149,7 @@ public class TelaRegistroTarefa extends javax.swing.JDialog {
         });
         jPanel3.add(btnCancelar);
 
-        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/controledetarefas/ui/icones/approve.png"))); // NOI18N
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/newtonpaiva/ui/icones/approve.png"))); // NOI18N
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,6 +219,10 @@ public class TelaRegistroTarefa extends javax.swing.JDialog {
         
         System.out.println(nome + " - " + prioridade + " - " + data + " - " 
                 + percentual);
+        
+        Tarefa t = new Tarefa();
+        t.setNome(nome);
+   
         
         // Montar um objeto tarefa
         // Gravar os dados no banco

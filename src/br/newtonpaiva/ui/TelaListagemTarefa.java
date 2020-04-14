@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controledetarefas;
+package br.newtonpaiva.ui;
 
 /**
  *
@@ -41,10 +41,10 @@ public class TelaListagemTarefa extends javax.swing.JDialog {
         setTitle("Listagem de tarefas");
         setResizable(false);
 
-        btnFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/controledetarefas/ui/icones/filtrar.png"))); // NOI18N
+        btnFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/newtonpaiva/ui/icones/filtrar.png"))); // NOI18N
         btnFiltrar.setText("Filtrar");
 
-        btnNova.setIcon(new javax.swing.ImageIcon(getClass().getResource("/controledetarefas/ui/icones/add.png"))); // NOI18N
+        btnNova.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/newtonpaiva/ui/icones/add.png"))); // NOI18N
         btnNova.setText("Nova");
         btnNova.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -52,7 +52,7 @@ public class TelaListagemTarefa extends javax.swing.JDialog {
             }
         });
 
-        btnRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/controledetarefas/ui/icones/remover.png"))); // NOI18N
+        btnRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/newtonpaiva/ui/icones/remover.png"))); // NOI18N
         btnRemover.setText("Remover");
 
         javax.swing.GroupLayout pnlControlesLayout = new javax.swing.GroupLayout(pnlControles);

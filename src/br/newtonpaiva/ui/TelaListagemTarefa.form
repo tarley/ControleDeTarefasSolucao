@@ -83,7 +83,7 @@
         <Component class="javax.swing.JButton" name="btnFiltrar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/controledetarefas/ui/icones/filtrar.png"/>
+              <Image iconType="3" name="/br/newtonpaiva/ui/icones/filtrar.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Filtrar"/>
           </Properties>
@@ -91,7 +91,7 @@
         <Component class="javax.swing.JButton" name="btnNova">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/controledetarefas/ui/icones/add.png"/>
+              <Image iconType="3" name="/br/newtonpaiva/ui/icones/add.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Nova"/>
           </Properties>
@@ -102,7 +102,7 @@
         <Component class="javax.swing.JButton" name="btnRemover">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/controledetarefas/ui/icones/remover.png"/>
+              <Image iconType="3" name="/br/newtonpaiva/ui/icones/remover.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Remover"/>
           </Properties>
