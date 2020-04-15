@@ -8,10 +8,13 @@ package br.newtonpaiva.modelo;
 //Ctrl + Shift + i
 
 import java.util.Calendar;
+import java.util.Objects;
 
 /**
- *
- * @author Tarley
+ * Esta classe é responsável por mapear uma tarefa do sistema.
+ * Essa tarefa pode ser gravada na base de dados, .......
+ * 
+ * @author Tarley Lana
  */
 public class Tarefa {
     /* Atributos */
@@ -22,13 +25,37 @@ public class Tarefa {
     private String situacao;
     private Integer percentual;
     private String descricao;
-    
-    
-    public Tarefa(String nome, Integer prioridade) {
-        
+
+    public Tarefa() {
     }
+
+    /**
+     * Construtor de tarefa basica.
+     * @param nome Este é o nome da tarefa.
+     * @param prioridade Esta é a prioridade da tarefa
+     */
+    public Tarefa(String nome, Integer prioridade) {
+        this.nome = nome;
+        this.prioridade = prioridade;
+    }
+
+    public Tarefa(Integer id, String nome, Integer prioridade, Calendar dataLimite, String situacao, Integer percentual, String descricao) {
+        this.id = id;
+        this.nome = nome;
+        this.prioridade = prioridade;
+        this.dataLimite = dataLimite;
+        this.situacao = situacao;
+        this.percentual = percentual;
+        this.descricao = descricao;
+    }
+
     
-     /* Métodos */
+    
+    /**
+     * Esse método grava na base de dados na tabela chamada tb_tarefa
+     * um registro de tarefa.
+     *
+     */
     public void salvar() {
         // gravar no banco de dados
         System.out.println("Executou o salvar()");
@@ -40,6 +67,13 @@ public class Tarefa {
     }
     
     public Tarefa[] listar() {
+        // Buscar do banco de dados as tarefas
+        System.out.println("Executou o listar");
+        
+        return null;
+    }
+    
+    public Tarefa[] listar(String filtro) {
         // Buscar do banco de dados as tarefas
         System.out.println("Executou o listar");
         
@@ -143,6 +177,35 @@ public class Tarefa {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Tarefa{" + "id=" + id + ", nome=" + nome + ", prioridade=" + prioridade + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 23 * hash + Objects.hashCode(this.nome);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Tarefa other = (Tarefa) obj;
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+ 
+        return true;
+    }
 }

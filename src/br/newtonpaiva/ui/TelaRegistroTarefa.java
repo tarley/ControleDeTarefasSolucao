@@ -6,6 +6,8 @@
 package br.newtonpaiva.ui;
 
 import br.newtonpaiva.modelo.Tarefa;
+import java.time.Instant;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 
 /**
@@ -221,8 +223,21 @@ public class TelaRegistroTarefa extends javax.swing.JDialog {
                 + percentual);
         
         Tarefa t = new Tarefa(nome, 5);
-        t.setNome(nome);
-        t.setDescricao(descricao);
+        System.out.println(t);
+        
+        Tarefa t2 = new Tarefa(1, "TEste", 1, Calendar.getInstance(), 
+                "Em andamento", 10, "Descricao teste");
+
+        if(t.equals(t2)) {
+            System.out.println("Iguais");
+        }
+        
+        // Newton Paiva = 77544212
+        // Newton Paiva = 77544212
+        
+        // Tarley Lana =  77544212
+        
+        Tarefa t3 = new Tarefa();
         
    
         
