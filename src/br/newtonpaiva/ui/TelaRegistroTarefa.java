@@ -6,8 +6,10 @@
 package br.newtonpaiva.ui;
 
 import br.newtonpaiva.modelo.Tarefa;
-import java.time.Instant;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -198,7 +200,7 @@ public class TelaRegistroTarefa extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        // TODO add your handling code here:
+        
         // Recuperar os dados da tela
         String nome = txtNome.getText().trim();
         
@@ -209,35 +211,48 @@ public class TelaRegistroTarefa extends javax.swing.JDialog {
             return;
         }
         
-        String prioridade = (String) cbxPrioridade.getSelectedItem();
+        String prioridadeStr = (String) cbxPrioridade.getSelectedItem();
+        Integer prioridade = Integer.parseInt(prioridadeStr);
         
-        String data = txtDataLimite.getText();
+        String dataStr = txtDataLimite.getText();
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar c = Calendar.getInstance();
+        
+        try {
+            Date date = df.parse(dataStr);
+            c.setTime(date);
+        } catch(ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Data Limite é Inválida.");
+            return;
+        }
+        
         
         String situacao = cbxSituacao.getSelectedItem().toString();
         
         Integer percentual = (Integer) txtPercentual.getValue();
         
         String descricao = txtDescricao.getText();
-        
-        System.out.println(nome + " - " + prioridade + " - " + data + " - " 
-                + percentual);
-        
-        Tarefa t = new Tarefa(nome, 5);
-        System.out.println(t);
-        
-        Tarefa t2 = new Tarefa(1, "TEste", 1, Calendar.getInstance(), 
-                "Em andamento", 10, "Descricao teste");
 
-        if(t.equals(t2)) {
-            System.out.println("Iguais");
-        }
         
-        // Newton Paiva = 77544212
-        // Newton Paiva = 77544212
+        Tarefa t = new Tarefa(null, nome, prioridade, 
+           c, situacao, percentual, descricao);
+                
+        t.salvar();
         
-        // Tarley Lana =  77544212
         
-        Tarefa t3 = new Tarefa();
+//        Tarefa t2 = new Tarefa(1, "TEste", 1, Calendar.getInstance(), 
+//                "Em andamento", 10, "Descricao teste");
+//
+//        if(t.equals(t2)) {
+//            System.out.println("Iguais");
+//        }
+//        
+//        // Newton Paiva = 77544212
+//        // Newton Paiva = 77544212
+//        
+//        // Tarley Lana =  77544212
+//        
+//        Tarefa t3 = new Tarefa();
         
    
         

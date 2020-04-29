@@ -7,8 +7,15 @@ package br.newtonpaiva.modelo;
 
 //Ctrl + Shift + i
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Calendar;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Esta classe é responsável por mapear uma tarefa do sistema.
@@ -59,6 +66,20 @@ public class Tarefa {
     public void salvar() {
         // gravar no banco de dados
         System.out.println("Executou o salvar()");
+        
+        Path arquivo = Paths.get("c:/temp/tarefa.csv");
+        String conteudo = this.nome + ";" + this.prioridade +
+                ";" + this.situacao + ";" + this.percentual + 
+                ";" + this.descricao + "\n";
+        
+        try { 
+            Files.write(arquivo, conteudo.getBytes(),
+                    StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+        } catch (IOException ex) {
+            Logger.getLogger(Tarefa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+   
     }
     
     public void excluir() {
