@@ -7,6 +7,8 @@ package br.newtonpaiva.modelo;
 
 //Ctrl + Shift + i
 
+import br.newtonpaiva.modelo.erros.NomeTarefaInvalidoException;
+import br.newtonpaiva.modelo.erros.PrioridadeTarefaInvalidaException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,8 +16,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Calendar;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Esta classe é responsável por mapear uma tarefa do sistema.
@@ -23,6 +23,10 @@ import java.util.logging.Logger;
  * 
  * @author Tarley Lana
  */
+
+// POJO
+// 
+
 public class Tarefa {
     /* Atributos */
     private Integer id; // 10
@@ -46,7 +50,17 @@ public class Tarefa {
         this.prioridade = prioridade;
     }
 
-    public Tarefa(Integer id, String nome, Integer prioridade, Calendar dataLimite, String situacao, Integer percentual, String descricao) {
+    public Tarefa(Integer id, String nome, Integer prioridade, Calendar dataLimite, String situacao, Integer percentual, String descricao) throws NomeTarefaInvalidoException, PrioridadeTarefaInvalidaException {
+        
+        if(nome == null || nome.trim().isEmpty()) {
+            throw new NomeTarefaInvalidoException();
+        }
+        
+        if(prioridade == null) {
+            throw new PrioridadeTarefaInvalidaException();
+        }
+        
+        
         this.id = id;
         this.nome = nome;
         this.prioridade = prioridade;
@@ -61,25 +75,18 @@ public class Tarefa {
     /**
      * Esse método grava na base de dados na tabela chamada tb_tarefa
      * um registro de tarefa.
-     *
+     * 
+     * @throws IOException Erro caso o arquivo tarefa.csv não exista no disco.
      */
-    public void salvar() {
-        // gravar no banco de dados
-        System.out.println("Executou o salvar()");
-        
-        Path arquivo = Paths.get("c:/temp/tarefa.csv");
+    public void salvar() throws IOException {
+        Path arquivo = Paths.get("tarefa.csv");
+       
         String conteudo = this.nome + ";" + this.prioridade +
                 ";" + this.situacao + ";" + this.percentual + 
                 ";" + this.descricao + "\n";
         
-        try { 
-            Files.write(arquivo, conteudo.getBytes(),
-                    StandardOpenOption.APPEND, StandardOpenOption.CREATE);
-        } catch (IOException ex) {
-            Logger.getLogger(Tarefa.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-   
+        Files.write(arquivo, conteudo.getBytes(),
+                StandardOpenOption.APPEND);
     }
     
     public void excluir() {
@@ -90,6 +97,8 @@ public class Tarefa {
     public Tarefa[] listar() {
         // Buscar do banco de dados as tarefas
         System.out.println("Executou o listar");
+        
+        
         
         return null;
     }

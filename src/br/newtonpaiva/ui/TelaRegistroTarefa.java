@@ -6,6 +6,10 @@
 package br.newtonpaiva.ui;
 
 import br.newtonpaiva.modelo.Tarefa;
+import br.newtonpaiva.modelo.erros.NomeTarefaInvalidoException;
+import br.newtonpaiva.modelo.erros.PrioridadeTarefaInvalidaException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -204,13 +208,6 @@ public class TelaRegistroTarefa extends javax.swing.JDialog {
         // Recuperar os dados da tela
         String nome = txtNome.getText().trim();
         
-        if(nome.equals("")) {
-            // Exibe mensagem de nome inválido
-            JOptionPane.showMessageDialog(this, "Nome não informado!");
-            // Cancela o fechamento da tela.
-            return;
-        }
-        
         String prioridadeStr = (String) cbxPrioridade.getSelectedItem();
         Integer prioridade = Integer.parseInt(prioridadeStr);
         
@@ -222,7 +219,7 @@ public class TelaRegistroTarefa extends javax.swing.JDialog {
             Date date = df.parse(dataStr);
             c.setTime(date);
         } catch(ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Data Limite é Inválida.");
+            JOptionPane.showMessageDialog(this, "Data Limite é Inválida. O formato correto é ....");
             return;
         }
         
@@ -234,30 +231,30 @@ public class TelaRegistroTarefa extends javax.swing.JDialog {
         String descricao = txtDescricao.getText();
 
         
-        Tarefa t = new Tarefa(null, nome, prioridade, 
-           c, situacao, percentual, descricao);
-                
-        t.salvar();
+       
+        Tarefa t = null;
+        try {
+            t = new Tarefa(null, nome, prioridade, 
+                                c, situacao, percentual, descricao);
+            t.salvar();
+        } catch(FileNotFoundException e) { 
+            JOptionPane.showMessageDialog(this, "Falha ao salvar a tarefa. Entre em contato com o suporte.");
+        } catch(IOException e) {
+            JOptionPane.showMessageDialog(this, "Falha ao salvar a tarefa. Entre em contato com o suporte.");
+        } catch(IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } catch(NomeTarefaInvalidoException e) {
+            JOptionPane.showMessageDialog(this, "O nome informado para a tarefa é inválido.");
+        } catch(PrioridadeTarefaInvalidaException e) {
+            JOptionPane.showMessageDialog(this, "A prioridade informada para a tarefa é inválido.");
+        } catch(Exception e) {
+            
+        } finally {
+            JOptionPane.showMessageDialog(this, "Tarefa " + t.getNome() + " criada com sucesso!");
+        }
         
+
         
-//        Tarefa t2 = new Tarefa(1, "TEste", 1, Calendar.getInstance(), 
-//                "Em andamento", 10, "Descricao teste");
-//
-//        if(t.equals(t2)) {
-//            System.out.println("Iguais");
-//        }
-//        
-//        // Newton Paiva = 77544212
-//        // Newton Paiva = 77544212
-//        
-//        // Tarley Lana =  77544212
-//        
-//        Tarefa t3 = new Tarefa();
-        
-   
-        
-        // Montar um objeto tarefa
-        // Gravar os dados no banco
         // Fechar tela.        
         setVisible(false);
     }//GEN-LAST:event_btnSalvarActionPerformed
