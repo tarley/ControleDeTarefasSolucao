@@ -148,7 +148,7 @@ public class Tarefa implements Comparable<Tarefa>{
         while(i.hasNext()) {
             Tarefa t = i.next();
             
-            if(!t.getNome().contains(filtro))
+            if(!t.getNome().toUpperCase().contains(filtro.toUpperCase()))
                 i.remove();
         }
         
