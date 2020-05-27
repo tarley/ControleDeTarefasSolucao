@@ -14,7 +14,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -27,7 +33,7 @@ import java.util.Objects;
 // POJO
 // 
 
-public class Tarefa {
+public class Tarefa implements Comparable<Tarefa>{
     /* Atributos */
     private Integer id; // 10
     private String nome;
@@ -94,20 +100,59 @@ public class Tarefa {
         System.out.println("Executou o excluir");
     }
     
-    public Tarefa[] listar() {
+    public static List<Tarefa> listar() throws IOException, 
+            NomeTarefaInvalidoException, PrioridadeTarefaInvalidaException {
         // Buscar do banco de dados as tarefas
         System.out.println("Executou o listar");
         
+        Path arquivo = Paths.get("tarefa.csv");
+        List<String> linhas = Files.readAllLines(arquivo);
         
+        List<Tarefa> listaParaRetorno = new LinkedList<>();
         
-        return null;
+        // Percorer as linhas retornadas
+        for(String linha : linhas) {
+            // Quebrar a string em ;
+            String[] informacoes = linha.split(";");
+            String nome = informacoes[0];
+            Integer prioridade = Integer.parseInt(informacoes[1]);
+            Calendar dataLimite = Calendar.getInstance();
+            String situacao = informacoes[2];
+            Integer percentual = Integer.parseInt(informacoes[3]);
+            String descricao = informacoes[4];
+
+            // Criar objeto e popular com as informações
+            Tarefa t = new Tarefa(null, nome, prioridade, dataLimite, situacao, percentual, descricao);
+            
+            // Armazenar em uma lista de tarefas
+            listaParaRetorno.add(t);
+        }
+//        Collections.sort(listaParaRetorno, new Comparator<Tarefa>() {
+//            @Override
+//            public int compare(Tarefa o1, Tarefa o2) {
+//                return o1.getPrioridade().compareTo(o2.getPrioridade());
+//            }
+//        });
+        
+        Collections.sort(listaParaRetorno);
+        return listaParaRetorno;
     }
     
-    public Tarefa[] listar(String filtro) {
-        // Buscar do banco de dados as tarefas
-        System.out.println("Executou o listar");
+    public static List<Tarefa> listar(String filtro) throws IOException, 
+            NomeTarefaInvalidoException, PrioridadeTarefaInvalidaException {
         
-        return null;
+        List<Tarefa> listaParaRetorno = listar();
+        
+        Iterator<Tarefa> i = listaParaRetorno.iterator();
+        
+        while(i.hasNext()) {
+            Tarefa t = i.next();
+            
+            if(!t.getNome().contains(filtro))
+                i.remove();
+        }
+        
+        return listaParaRetorno;
     }
 
     /**
@@ -237,5 +282,18 @@ public class Tarefa {
         }
  
         return true;
+    }
+
+    @Override
+    public int compareTo(Tarefa o) {
+//        Integer minhaPrioridade = getPrioridade();
+//        Integer outraPrioridade = o.getPrioridade();
+//        
+//        return minhaPrioridade.compareTo(outraPrioridade);
+
+          String meuNome = getNome();
+          String outroNome = o.getNome();
+          
+          return meuNome.toUpperCase().compareTo(outroNome.toUpperCase()) * -1;
     }
 }

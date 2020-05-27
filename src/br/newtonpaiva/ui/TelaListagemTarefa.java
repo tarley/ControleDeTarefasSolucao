@@ -5,6 +5,12 @@
  */
 package br.newtonpaiva.ui;
 
+import br.newtonpaiva.modelo.Tarefa;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Tarley
@@ -35,7 +41,7 @@ public class TelaListagemTarefa extends javax.swing.JDialog {
         btnNova = new javax.swing.JButton();
         btnRemover = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblTarefas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listagem de tarefas");
@@ -43,6 +49,11 @@ public class TelaListagemTarefa extends javax.swing.JDialog {
 
         btnFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/newtonpaiva/ui/icones/filtrar.png"))); // NOI18N
         btnFiltrar.setText("Filtrar");
+        btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltrarActionPerformed(evt);
+            }
+        });
 
         btnNova.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/newtonpaiva/ui/icones/add.png"))); // NOI18N
         btnNova.setText("Nova");
@@ -84,12 +95,9 @@ public class TelaListagemTarefa extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblTarefas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                { new Integer(10), "Tarefa 1", "Feito",  new Integer(10), "10/02/2020", "100%"},
-                { new Integer(20), "Tarefa 2", "Em Execução",  new Integer(5), "24/03/2020", "75%"},
-                { new Integer(30), "Tarefa 3", "A Fazer",  new Integer(3), "05/04/2020", "0%"},
-                { new Integer(40), "Tarefa 4", "A Fazer",  new Integer(7), "06/04/2020", "0%"}
+
             },
             new String [] {
                 "Núm.", "Nome", "Situação", "Prioridade", "Data Limite", "Percentual"
@@ -110,7 +118,7 @@ public class TelaListagemTarefa extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblTarefas);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -137,6 +145,43 @@ public class TelaListagemTarefa extends javax.swing.JDialog {
         
         System.out.println("teste");
     }//GEN-LAST:event_btnNovaActionPerformed
+
+    private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
+        // TODO add your handling code here:
+        //Tarefa t = new Tarefa();
+        try {
+            String filtro = txtFiltro.getText().trim();
+            
+            List<Tarefa> listaTarefas;
+            
+            if(filtro.isEmpty())
+                listaTarefas = Tarefa.listar();
+            else
+                listaTarefas = Tarefa.listar(filtro);
+            
+            DefaultTableModel modelo = (DefaultTableModel) tblTarefas.getModel();
+            modelo.setRowCount(0);
+            
+            SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy");
+            
+            for(int i = 0; i < listaTarefas.size(); i ++) {
+                Tarefa t = listaTarefas.get(i);
+                //JOptionPane.showMessageDialog(this, t.toString());
+                String dataLimite = dataFormat.format(t.getDataLimite().getTime());
+                
+                Object[] rowData = {i + 1, t.getNome(), t.getSituacao(), 
+                                    t.getPrioridade(), dataLimite, 
+                                    t.getPercentual()};
+                
+                modelo.addRow(rowData);
+            }
+            
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(this, "Não foi possivel recuperar as tarefas.");
+            e.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_btnFiltrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,8 +231,8 @@ public class TelaListagemTarefa extends javax.swing.JDialog {
     private javax.swing.JButton btnNova;
     private javax.swing.JButton btnRemover;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel pnlControles;
+    private javax.swing.JTable tblTarefas;
     private javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
 }

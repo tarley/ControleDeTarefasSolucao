@@ -87,6 +87,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Filtrar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFiltrarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnNova">
           <Properties>
@@ -116,46 +119,16 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable1">
+        <Component class="javax.swing.JTable" name="tblTarefas">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="6" rowCount="4">
-                <Column editable="false" title="N&#xfa;m." type="java.lang.Integer">
-                  <Data value="10"/>
-                  <Data value="20"/>
-                  <Data value="30"/>
-                  <Data value="40"/>
-                </Column>
-                <Column editable="false" title="Nome" type="java.lang.String">
-                  <Data value="Tarefa 1"/>
-                  <Data value="Tarefa 2"/>
-                  <Data value="Tarefa 3"/>
-                  <Data value="Tarefa 4"/>
-                </Column>
-                <Column editable="false" title="Situa&#xe7;&#xe3;o" type="java.lang.String">
-                  <Data value="Feito"/>
-                  <Data value="Em Execu&#xe7;&#xe3;o"/>
-                  <Data value="A Fazer"/>
-                  <Data value="A Fazer"/>
-                </Column>
-                <Column editable="false" title="Prioridade" type="java.lang.Integer">
-                  <Data value="10"/>
-                  <Data value="5"/>
-                  <Data value="3"/>
-                  <Data value="7"/>
-                </Column>
-                <Column editable="false" title="Data Limite" type="java.lang.String">
-                  <Data value="10/02/2020"/>
-                  <Data value="24/03/2020"/>
-                  <Data value="05/04/2020"/>
-                  <Data value="06/04/2020"/>
-                </Column>
-                <Column editable="false" title="Percentual" type="java.lang.String">
-                  <Data value="100%"/>
-                  <Data value="75%"/>
-                  <Data value="0%"/>
-                  <Data value="0%"/>
-                </Column>
+              <Table columnCount="6" rowCount="0">
+                <Column editable="false" title="N&#xfa;m." type="java.lang.Integer"/>
+                <Column editable="false" title="Nome" type="java.lang.String"/>
+                <Column editable="false" title="Situa&#xe7;&#xe3;o" type="java.lang.String"/>
+                <Column editable="false" title="Prioridade" type="java.lang.Integer"/>
+                <Column editable="false" title="Data Limite" type="java.lang.String"/>
+                <Column editable="false" title="Percentual" type="java.lang.String"/>
               </Table>
             </Property>
           </Properties>
