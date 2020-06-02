@@ -65,6 +65,11 @@ public class TelaListagemTarefa extends javax.swing.JDialog {
 
         btnRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/newtonpaiva/ui/icones/remover.png"))); // NOI18N
         btnRemover.setText("Remover");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlControlesLayout = new javax.swing.GroupLayout(pnlControles);
         pnlControles.setLayout(pnlControlesLayout);
@@ -182,6 +187,31 @@ public class TelaListagemTarefa extends javax.swing.JDialog {
         }
         
     }//GEN-LAST:event_btnFiltrarActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        // TODO add your handling code here:
+        int index = tblTarefas.getSelectedRow();
+        
+        if(index != -1) {
+            int opt = JOptionPane.showConfirmDialog(this, "Confirma a exclusão da tarefa?",
+                    "Exclusão de Tarefa", JOptionPane.YES_NO_OPTION);
+            
+            if(opt == JOptionPane.YES_OPTION) {
+                try {
+                    Tarefa.excluir(index);
+
+                    DefaultTableModel model = (DefaultTableModel) tblTarefas.getModel();
+                    model.removeRow(index);
+                }catch(Exception e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, 
+                            "Não foi possivel excluir a informação em disco.");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Favor selecionar uma tarefa primeiro.");
+        }
+    }//GEN-LAST:event_btnRemoverActionPerformed
 
     /**
      * @param args the command line arguments

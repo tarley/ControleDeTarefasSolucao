@@ -85,14 +85,19 @@ public class Tarefa implements Comparable<Tarefa>{
      * @throws IOException Erro caso o arquivo tarefa.csv não exista no disco.
      */
     public void salvar() throws IOException {
-        Path arquivo = Paths.get("tarefa.csv");
+        Path arquivo = Paths.get(TAREFA_CSV);
        
-        String conteudo = this.nome + ";" + this.prioridade +
-                ";" + this.situacao + ";" + this.percentual + 
-                ";" + this.descricao + "\n";
+        String conteudo = gerarLinhaCSV();
         
         Files.write(arquivo, conteudo.getBytes(),
+                StandardOpenOption.CREATE,
                 StandardOpenOption.APPEND);
+    }
+
+    private String gerarLinhaCSV() {
+        return this.nome + ";" + this.prioridade +
+                ";" + this.situacao + ";" + this.percentual +
+                ";" + this.descricao + "\n";
     }
     
     public void excluir() {
@@ -105,7 +110,7 @@ public class Tarefa implements Comparable<Tarefa>{
         // Buscar do banco de dados as tarefas
         System.out.println("Executou o listar");
         
-        Path arquivo = Paths.get("tarefa.csv");
+        Path arquivo = Paths.get(TAREFA_CSV);
         List<String> linhas = Files.readAllLines(arquivo);
         
         List<Tarefa> listaParaRetorno = new LinkedList<>();
@@ -155,6 +160,26 @@ public class Tarefa implements Comparable<Tarefa>{
         return listaParaRetorno;
     }
 
+    public static void excluir(int id) throws IOException, 
+            NomeTarefaInvalidoException, PrioridadeTarefaInvalidaException {
+        
+        List<Tarefa> lista = listar();
+        lista.remove(id);
+        
+        StringBuilder conteudoTotal = new StringBuilder();
+        
+        for(Tarefa t : lista) {
+            String conteudo = t.gerarLinhaCSV();
+            
+            conteudoTotal.append(conteudo);
+        }
+        Path arquivo = Paths.get(TAREFA_CSV);
+        Files.write(arquivo, conteudoTotal.toString().getBytes(), 
+                StandardOpenOption.TRUNCATE_EXISTING);
+        
+    }
+    private static final String TAREFA_CSV = "tarefa.csv";
+    
     /**
      * @return the id
      */
