@@ -14,14 +14,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Esta classe é responsável por mapear uma tarefa do sistema.
@@ -104,7 +101,7 @@ public class Tarefa implements Comparable<Tarefa>{
         // excluir no banco de dados
         System.out.println("Executou o excluir");
     }
-    
+    /*
     public static List<Tarefa> listar() throws IOException, 
             NomeTarefaInvalidoException, PrioridadeTarefaInvalidaException {
         // Buscar do banco de dados as tarefas
@@ -142,7 +139,37 @@ public class Tarefa implements Comparable<Tarefa>{
         Collections.sort(listaParaRetorno);
         return listaParaRetorno;
     }
+    */
     
+    public static List<Tarefa> listar() throws IOException, 
+            NomeTarefaInvalidoException, PrioridadeTarefaInvalidaException {
+        // Buscar do banco de dados as tarefas
+        System.out.println("Executou o listar");
+        
+        Path arquivo = Paths.get(TAREFA_CSV);
+        return Files.readAllLines(arquivo)
+                    .stream()
+                    .map((linha) -> {
+                        String[] informacoes = linha.split(";");
+                        
+                        Tarefa t = new Tarefa();
+                        t.setNome(informacoes[0]);
+                        t.setPrioridade(Integer.parseInt(informacoes[1]));
+                        t.setDataLimite(Calendar.getInstance());
+                        t.setSituacao(informacoes[2]);
+                        t.setPercentual(Integer.parseInt(informacoes[3]));
+                        t.setDescricao(informacoes[4]);
+                        
+                        return t;
+                    })
+                    .sorted((Tarefa t1, Tarefa t2 ) -> {
+                        return t1.getPercentual().compareTo(t2.getPercentual());
+                    })
+                    //.filter(t -> t.getSituacao().equals("Em andamento"))
+                    .collect(Collectors.toList());
+    }
+    
+    /*
     public static List<Tarefa> listar(String filtro) throws IOException, 
             NomeTarefaInvalidoException, PrioridadeTarefaInvalidaException {
         
@@ -158,6 +185,16 @@ public class Tarefa implements Comparable<Tarefa>{
         }
         
         return listaParaRetorno;
+    }
+    */
+    
+    public static List<Tarefa> listar(String filtro) throws IOException, 
+            NomeTarefaInvalidoException, PrioridadeTarefaInvalidaException {
+        
+        return listar()
+                   .stream()
+                   .filter(t -> !t.getNome().toUpperCase().contains(filtro.toUpperCase()))
+                   .collect(Collectors.toList());
     }
 
     public static void excluir(int id) throws IOException, 
